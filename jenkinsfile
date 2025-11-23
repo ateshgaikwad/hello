@@ -4,26 +4,25 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/ateshgaikwad/hello'
+                git branch: 'main', url: 'https://github.com/ateshgaikwad/hello.git'
             }
         }
 
         stage('Deploy to EC2-2') {
             steps {
-                sshagent(['EC2-2-SSH-ID']) {
-                    sh '''
-                    echo "Deploying simple HTML site..."
+                sh '''
+                echo "Deploying simple HTML site..."
 
-                    # Create folder on EC2-2
-                    ssh -o StrictHostKeyChecking=no ubuntu@13.233.103.149 "sudo mkdir -p /var/www/hello"
+                # Create folder on EC2-2
+                ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ubuntu@13.233.103.149 "sudo mkdir -p /var/www/hello"
 
-                    # Sync files to EC2-2
-                    rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ubuntu@13.233.103.149:/var/www/hello/
+                # Sync files to EC2-2
+                rsync -avz -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" ./ ubuntu@13.233.103.149:/var/www/hello/
 
-                    echo "Deployment complete."
-                    '''
-                }
+                echo "Deployment complete!"
+                '''
             }
         }
     }
 }
+
