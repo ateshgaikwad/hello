@@ -4,5 +4,8 @@ on: push
 jobs: 
   job1:
     runs-on: ubuntu-latest
-    steps: 
-      - echo "hi"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: command
+        run: echo "hi"
