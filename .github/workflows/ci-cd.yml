@@ -1,0 +1,8 @@
+name: ci-cd 
+on: push
+  bracnches: main
+jobs: 
+  job1:
+    runs-on: ubuntu-latest
+    steps: 
+      - echo "hi"
